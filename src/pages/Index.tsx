@@ -22,7 +22,7 @@ import Icon from "@/components/ui/icon";
 const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<"posts" | "friends" | "videos" | "music">("posts");
+  const [activeTab, setActiveTab] = useState<"posts" | "friends" | "videos" | "music" | "reels">("posts");
   const [playingId, setPlayingId] = useState<number | null>(null);
 
   return (
@@ -324,6 +324,13 @@ const Index = () => {
                           Музыка
                         </button>
                         <button
+                          onClick={() => setActiveTab("reels")}
+                          className={`px-2 sm:px-3 py-2 text-xs sm:text-sm font-medium flex items-center gap-1 ${activeTab === "reels" ? "text-white border-b-2 border-[#5865f2]" : "text-[#8e9297] hover:text-[#dcddde]"}`}
+                        >
+                          <Icon name="Clapperboard" size={12} />
+                          Рилсы
+                        </button>
+                        <button
                           onClick={() => setActiveTab("friends")}
                           className={`px-2 sm:px-3 py-2 text-xs sm:text-sm font-medium ${activeTab === "friends" ? "text-white border-b-2 border-[#5865f2]" : "text-[#8e9297] hover:text-[#dcddde]"}`}
                         >
@@ -463,6 +470,49 @@ const Index = () => {
                               </button>
                             </div>
                           ))}
+                        </div>
+                      )}
+
+                      {activeTab === "reels" && (
+                        <div className="space-y-2">
+                          {/* Загрузить рилс */}
+                          <button className="w-full border-2 border-dashed border-[#40444b] hover:border-[#ed4245] rounded-lg p-3 flex flex-col items-center gap-1 transition-colors group">
+                            <Icon name="Clapperboard" size={20} className="text-[#8e9297] group-hover:text-[#ed4245]" />
+                            <span className="text-[#8e9297] group-hover:text-[#ed4245] text-xs font-medium">Снять рилс</span>
+                          </button>
+
+                          {/* Сетка рилсов */}
+                          <div className="grid grid-cols-2 gap-2">
+                            {[
+                              { id: 1, caption: "Питер за 60 секунд ⚡", views: 14200, duration: "0:58", gradient: "from-pink-500 to-rose-600", emoji: "🌉" },
+                              { id: 2, caption: "Рецепт кофе утром ☕", views: 8900, duration: "0:45", gradient: "from-orange-500 to-amber-600", emoji: "☕" },
+                              { id: 3, caption: "Танцы под дождём 💃", views: 22100, duration: "0:30", gradient: "from-purple-500 to-violet-600", emoji: "💃" },
+                              { id: 4, caption: "Закат с крыши 🌅", views: 5400, duration: "1:00", gradient: "from-blue-500 to-cyan-600", emoji: "🌅" },
+                            ].map((reel) => (
+                              <div key={reel.id} className="relative rounded-lg overflow-hidden cursor-pointer group aspect-[9/16] max-h-44">
+                                {/* Обложка */}
+                                <div className={`w-full h-full bg-gradient-to-br ${reel.gradient} flex items-center justify-center text-4xl`}>
+                                  {reel.emoji}
+                                </div>
+                                {/* Оверлей */}
+                                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                  <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                                    <Icon name="Play" size={18} className="text-white ml-0.5" />
+                                  </div>
+                                </div>
+                                {/* Длительность */}
+                                <span className="absolute top-1.5 right-1.5 text-white text-xs bg-black/50 px-1 rounded">{reel.duration}</span>
+                                {/* Просмотры снизу */}
+                                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2">
+                                  <p className="text-white text-xs font-medium truncate">{reel.caption}</p>
+                                  <div className="flex items-center gap-1 text-white/80 text-xs mt-0.5">
+                                    <Icon name="Eye" size={10} />
+                                    <span>{(reel.views / 1000).toFixed(1)}к</span>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       )}
 
