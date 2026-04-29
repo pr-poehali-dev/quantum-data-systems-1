@@ -35,7 +35,7 @@ const Index = () => {
               <Icon name="MessageSquare" size={20} className="text-white" />
             </div>
             <div>
-              <h1 className="text-lg sm:text-xl font-bold text-white">Говорилка</h1>
+              <h1 className="text-lg sm:text-xl font-bold text-white">Друзья</h1>
               <p className="text-xs text-[#b9bbbe] hidden sm:block">Русскоязычный мессенджер нового поколения</p>
             </div>
           </div>
@@ -96,7 +96,7 @@ const Index = () => {
           {/* Боковая панель каналов */}
           <div className={`${mobileSidebarOpen ? "block" : "hidden"} lg:block w-full lg:w-60 bg-[#2f3136] flex flex-col`}>
             <div className="p-4 border-b border-[#202225] flex items-center justify-between">
-              <h2 className="text-white font-semibold text-base">Сервер «Говорилка»</h2>
+              <h2 className="text-white font-semibold text-base">Сервер «Друзья»</h2>
               <Button
                 variant="ghost"
                 className="lg:hidden text-[#b9bbbe] hover:text-white hover:bg-[#40444b] p-1"
@@ -220,7 +220,7 @@ const Index = () => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-baseline gap-2 mb-1">
-                    <span className="text-white font-medium text-sm sm:text-base">Говорилка</span>
+                    <span className="text-white font-medium text-sm sm:text-base">Друзья</span>
                     <span className="bg-[#5865f2] text-white text-xs px-1 rounded">СИСТЕМА</span>
                     <span className="text-[#72767d] text-xs hidden sm:inline">Сегодня в 10:00</span>
                   </div>
@@ -229,7 +229,7 @@ const Index = () => {
                       <strong>Добро пожаловать в Говорилку!</strong> Здесь вы можете общаться в текстовых и голосовых каналах, добавлять друзей и делиться публикациями на своей странице.
                     </p>
                     <div className="bg-[#2f3136] border-l-4 border-[#5865f2] p-3 sm:p-4 rounded">
-                      <h3 className="text-white font-semibold mb-2 text-sm sm:text-base">Что умеет Говорилка:</h3>
+                      <h3 className="text-white font-semibold mb-2 text-sm sm:text-base">Что умеет Друзья:</h3>
                       <ul className="space-y-1 text-xs sm:text-sm text-[#b9bbbe]">
                         <li>💬 Текстовые каналы для общения по темам</li>
                         <li>🎙️ Голосовые каналы — разговаривайте голосом</li>
@@ -582,7 +582,7 @@ const Index = () => {
 
               {/* Секция возможностей */}
               <div className="bg-[#2f3136] rounded-xl p-4 sm:p-6 border border-[#202225]">
-                <h2 className="text-white text-lg sm:text-xl font-bold mb-1">Говорилка — общение без границ</h2>
+                <h2 className="text-white text-lg sm:text-xl font-bold mb-1">Друзья — общение без границ</h2>
                 <p className="text-[#b9bbbe] text-sm mb-4 sm:mb-6">
                   Русскоязычный мессенджер с голосовыми и текстовыми каналами, системой друзей и личными страницами
                 </p>
