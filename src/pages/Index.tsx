@@ -22,7 +22,7 @@ import Icon from "@/components/ui/icon";
 const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<"posts" | "friends">("posts");
+  const [activeTab, setActiveTab] = useState<"posts" | "friends" | "videos">("posts");
 
   return (
     <div className="min-h-screen bg-[#36393f] text-white overflow-x-hidden">
@@ -304,20 +304,27 @@ const Index = () => {
                       <div className="flex border-b border-[#40444b] mb-3">
                         <button
                           onClick={() => setActiveTab("posts")}
-                          className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium ${activeTab === "posts" ? "text-white border-b-2 border-[#5865f2]" : "text-[#8e9297] hover:text-[#dcddde]"}`}
+                          className={`px-2 sm:px-3 py-2 text-xs sm:text-sm font-medium ${activeTab === "posts" ? "text-white border-b-2 border-[#5865f2]" : "text-[#8e9297] hover:text-[#dcddde]"}`}
                         >
                           Публикации
                         </button>
                         <button
+                          onClick={() => setActiveTab("videos")}
+                          className={`px-2 sm:px-3 py-2 text-xs sm:text-sm font-medium flex items-center gap-1 ${activeTab === "videos" ? "text-white border-b-2 border-[#5865f2]" : "text-[#8e9297] hover:text-[#dcddde]"}`}
+                        >
+                          <Icon name="Video" size={12} />
+                          Видео
+                        </button>
+                        <button
                           onClick={() => setActiveTab("friends")}
-                          className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium ${activeTab === "friends" ? "text-white border-b-2 border-[#5865f2]" : "text-[#8e9297] hover:text-[#dcddde]"}`}
+                          className={`px-2 sm:px-3 py-2 text-xs sm:text-sm font-medium ${activeTab === "friends" ? "text-white border-b-2 border-[#5865f2]" : "text-[#8e9297] hover:text-[#dcddde]"}`}
                         >
                           Друзья
                         </button>
                       </div>
 
                       {/* Содержимое вкладок */}
-                      {activeTab === "posts" ? (
+                      {activeTab === "posts" && (
                         <div className="space-y-2">
                           {[
                             { text: "Сегодня побывала в Питере — невероятно красиво! 🌉", likes: 34, time: "2 ч назад" },
@@ -339,7 +346,46 @@ const Index = () => {
                             </div>
                           ))}
                         </div>
-                      ) : (
+                      )}
+
+                      {activeTab === "videos" && (
+                        <div className="space-y-2">
+                          {/* Кнопка загрузки */}
+                          <button className="w-full border-2 border-dashed border-[#40444b] hover:border-[#5865f2] rounded-lg p-3 flex flex-col items-center gap-1 transition-colors group">
+                            <Icon name="Upload" size={20} className="text-[#8e9297] group-hover:text-[#5865f2]" />
+                            <span className="text-[#8e9297] group-hover:text-[#5865f2] text-xs font-medium">Загрузить видео</span>
+                          </button>
+                          {/* Демо-видео */}
+                          {[
+                            { title: "Закат в Санкт-Петербурге", views: 1240, duration: "1:23", time: "3 дня назад" },
+                            { title: "Мой утренний влог ☕", views: 856, duration: "4:07", time: "Неделю назад" },
+                          ].map((video, i) => (
+                            <div key={i} className="bg-[#36393f] rounded-lg overflow-hidden flex gap-2">
+                              <div className="w-20 h-14 bg-gradient-to-br from-[#5865f2] to-[#7c3aed] flex items-center justify-center flex-shrink-0 relative">
+                                <Icon name="Play" size={20} className="text-white" />
+                                <span className="absolute bottom-1 right-1 text-white text-xs bg-black/50 px-1 rounded">{video.duration}</span>
+                              </div>
+                              <div className="flex-1 py-2 pr-2 min-w-0">
+                                <div className="text-white text-xs font-medium truncate">{video.title}</div>
+                                <div className="text-[#8e9297] text-xs mt-0.5 flex items-center gap-2">
+                                  <span className="flex items-center gap-1"><Icon name="Eye" size={10} />{video.views}</span>
+                                  <span>{video.time}</span>
+                                </div>
+                                <div className="flex gap-1 mt-1">
+                                  <button className="flex items-center gap-1 text-[#8e9297] hover:text-[#ed4245] text-xs">
+                                    <Heart className="w-3 h-3" />
+                                  </button>
+                                  <button className="flex items-center gap-1 text-[#8e9297] hover:text-[#5865f2] text-xs">
+                                    <MessageCircle className="w-3 h-3" />
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {activeTab === "friends" && (
                         <div className="space-y-2">
                           {[
                             { name: "Игорь_SPB", status: "В сети", avatar: "И", color: "from-blue-500 to-cyan-500" },
