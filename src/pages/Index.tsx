@@ -22,7 +22,8 @@ import Icon from "@/components/ui/icon";
 const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<"posts" | "friends" | "videos">("posts");
+  const [activeTab, setActiveTab] = useState<"posts" | "friends" | "videos" | "music">("posts");
+  const [playingId, setPlayingId] = useState<number | null>(null);
 
   return (
     <div className="min-h-screen bg-[#36393f] text-white overflow-x-hidden">
@@ -316,6 +317,13 @@ const Index = () => {
                           Видео
                         </button>
                         <button
+                          onClick={() => setActiveTab("music")}
+                          className={`px-2 sm:px-3 py-2 text-xs sm:text-sm font-medium flex items-center gap-1 ${activeTab === "music" ? "text-white border-b-2 border-[#5865f2]" : "text-[#8e9297] hover:text-[#dcddde]"}`}
+                        >
+                          <Icon name="Music" size={12} />
+                          Музыка
+                        </button>
+                        <button
                           onClick={() => setActiveTab("friends")}
                           className={`px-2 sm:px-3 py-2 text-xs sm:text-sm font-medium ${activeTab === "friends" ? "text-white border-b-2 border-[#5865f2]" : "text-[#8e9297] hover:text-[#dcddde]"}`}
                         >
@@ -380,6 +388,79 @@ const Index = () => {
                                   </button>
                                 </div>
                               </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {activeTab === "music" && (
+                        <div className="space-y-2">
+                          {/* Кнопка загрузки трека */}
+                          <button className="w-full border-2 border-dashed border-[#40444b] hover:border-[#5865f2] rounded-lg p-3 flex flex-col items-center gap-1 transition-colors group">
+                            <Icon name="Upload" size={20} className="text-[#8e9297] group-hover:text-[#5865f2]" />
+                            <span className="text-[#8e9297] group-hover:text-[#5865f2] text-xs font-medium">Загрузить трек</span>
+                          </button>
+
+                          {/* Мини-плеер активного трека */}
+                          {playingId !== null && (
+                            <div className="bg-gradient-to-r from-[#5865f2]/20 to-[#7c3aed]/20 border border-[#5865f2]/40 rounded-lg p-2 flex items-center gap-2">
+                              <div className="w-8 h-8 bg-gradient-to-br from-[#5865f2] to-[#7c3aed] rounded-lg flex items-center justify-center flex-shrink-0">
+                                <Icon name="Music2" size={14} className="text-white" />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <div className="text-white text-xs font-medium truncate">
+                                  {playingId === 1 ? "Белые ночи" : "Летний вечер"}
+                                </div>
+                                <div className="w-full bg-[#40444b] rounded-full h-1 mt-1">
+                                  <div className="bg-[#5865f2] h-1 rounded-full w-2/5 animate-pulse"></div>
+                                </div>
+                              </div>
+                              <button onClick={() => setPlayingId(null)} className="text-[#8e9297] hover:text-white">
+                                <Icon name="Square" size={14} />
+                              </button>
+                            </div>
+                          )}
+
+                          {/* Список треков */}
+                          {[
+                            { id: 1, title: "Белые ночи", artist: "Катя Соколова", duration: "3:42", plays: 2140, genre: "Инди" },
+                            { id: 2, title: "Летний вечер", artist: "Катя Соколова", duration: "4:15", plays: 987, genre: "Лаунж" },
+                            { id: 3, title: "Дождь в городе", artist: "Катя Соколова", duration: "2:58", plays: 543, genre: "Поп" },
+                          ].map((track) => (
+                            <div
+                              key={track.id}
+                              className={`flex items-center gap-2 p-2 rounded-lg cursor-pointer transition-colors ${playingId === track.id ? "bg-[#5865f2]/20 border border-[#5865f2]/30" : "bg-[#36393f] hover:bg-[#393c43]"}`}
+                            >
+                              {/* Обложка / кнопка play */}
+                              <button
+                                onClick={() => setPlayingId(playingId === track.id ? null : track.id)}
+                                className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${playingId === track.id ? "bg-[#5865f2]" : "bg-gradient-to-br from-[#5865f2] to-[#7c3aed]"}`}
+                              >
+                                <Icon name={playingId === track.id ? "Pause" : "Play"} size={14} className="text-white" />
+                              </button>
+
+                              {/* Название */}
+                              <div className="flex-1 min-w-0">
+                                <div className={`text-xs font-medium truncate ${playingId === track.id ? "text-[#5865f2]" : "text-white"}`}>{track.title}</div>
+                                <div className="text-[#8e9297] text-xs flex items-center gap-2">
+                                  <span>{track.artist}</span>
+                                  <span className="bg-[#40444b] px-1 rounded text-[10px]">{track.genre}</span>
+                                </div>
+                              </div>
+
+                              {/* Прослушивания + длительность */}
+                              <div className="text-right flex-shrink-0">
+                                <div className="text-[#8e9297] text-xs flex items-center gap-1 justify-end">
+                                  <Icon name="Headphones" size={10} />
+                                  <span>{track.plays.toLocaleString("ru")}</span>
+                                </div>
+                                <div className="text-[#8e9297] text-xs">{track.duration}</div>
+                              </div>
+
+                              {/* Лайк */}
+                              <button className="text-[#8e9297] hover:text-[#ed4245] ml-1">
+                                <Heart className="w-3 h-3" />
+                              </button>
                             </div>
                           ))}
                         </div>
