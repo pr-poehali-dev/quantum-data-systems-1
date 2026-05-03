@@ -1,0 +1,10 @@
+{
+  "tests": [
+    {
+      "name": "GET balance without user_id returns 400",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 400
+    }
+  ]
+}

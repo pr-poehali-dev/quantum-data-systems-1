@@ -1,4 +1,5 @@
 import { useState } from "react";
+import DonateModal from "@/components/DonateModal";
 import {
   Shield,
   Zap,
@@ -23,9 +24,11 @@ const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"posts" | "friends" | "videos" | "music" | "reels">("posts");
+  const [donateOpen, setDonateOpen] = useState(false);
   const [playingId, setPlayingId] = useState<number | null>(null);
 
   return (
+    <>
     <div className="min-h-screen bg-[#36393f] text-white overflow-x-hidden">
       {/* Навигация */}
       <nav className="bg-[#2f3136] border-b border-[#202225] px-4 sm:px-6 py-4">
@@ -268,13 +271,22 @@ const Index = () => {
                           <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-[#3ba55c] border-2 border-[#2f3136] rounded-full"></div>
                         </div>
                       </div>
-                      <Button
-                        size="sm"
-                        className="absolute top-2 sm:top-3 right-2 sm:right-3 bg-[#5865f2] hover:bg-[#4752c4] text-white text-xs px-2 sm:px-3 py-1 rounded flex items-center gap-1"
-                      >
-                        <UserPlus className="w-3 h-3" />
-                        <span>Добавить</span>
-                      </Button>
+                      <div className="absolute top-2 sm:top-3 right-2 sm:right-3 flex gap-1">
+                        <button
+                          onClick={() => setDonateOpen(true)}
+                          className="bg-[#f5a623] hover:bg-[#e0961e] text-white text-xs px-2 py-1 rounded flex items-center gap-1 font-medium transition-colors"
+                        >
+                          <span>🎙️</span>
+                          <span className="hidden sm:inline">Голоса</span>
+                        </button>
+                        <Button
+                          size="sm"
+                          className="bg-[#5865f2] hover:bg-[#4752c4] text-white text-xs px-2 sm:px-3 py-1 rounded flex items-center gap-1"
+                        >
+                          <UserPlus className="w-3 h-3" />
+                          <span>Добавить</span>
+                        </Button>
+                      </div>
                     </div>
 
                     {/* Информация профиля */}
@@ -720,6 +732,16 @@ const Index = () => {
         </div>
       </div>
     </div>
+
+    {donateOpen && (
+      <DonateModal
+        toUserId={2}
+        toName="Катя Соколова"
+        fromUserId={1}
+        onClose={() => setDonateOpen(false)}
+      />
+    )}
+    </>
   );
 };
 
