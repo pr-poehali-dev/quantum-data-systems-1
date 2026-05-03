@@ -1,5 +1,6 @@
 import { useState } from "react";
 import DonateModal from "@/components/DonateModal";
+import GiftsModal from "@/components/GiftsModal";
 import {
   Shield,
   Zap,
@@ -25,6 +26,8 @@ const Index = () => {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"posts" | "friends" | "videos" | "music" | "reels">("posts");
   const [donateOpen, setDonateOpen] = useState(false);
+  const [giftsOpen, setGiftsOpen] = useState(false);
+  const [myBalance, setMyBalance] = useState(0);
   const [playingId, setPlayingId] = useState<number | null>(null);
 
   return (
@@ -272,6 +275,13 @@ const Index = () => {
                         </div>
                       </div>
                       <div className="absolute top-2 sm:top-3 right-2 sm:right-3 flex gap-1">
+                        <button
+                          onClick={() => setGiftsOpen(true)}
+                          className="bg-pink-500 hover:bg-pink-600 text-white text-xs px-2 py-1 rounded flex items-center gap-1 font-medium transition-colors"
+                        >
+                          <span>🎁</span>
+                          <span className="hidden sm:inline">Подарок</span>
+                        </button>
                         <button
                           onClick={() => setDonateOpen(true)}
                           className="bg-[#f5a623] hover:bg-[#e0961e] text-white text-xs px-2 py-1 rounded flex items-center gap-1 font-medium transition-colors"
@@ -739,6 +749,17 @@ const Index = () => {
         toName="Катя Соколова"
         fromUserId={1}
         onClose={() => setDonateOpen(false)}
+      />
+    )}
+
+    {giftsOpen && (
+      <GiftsModal
+        toUserId={2}
+        toName="Катя Соколова"
+        fromUserId={1}
+        balance={myBalance}
+        onClose={() => setGiftsOpen(false)}
+        onBalanceChange={(b) => setMyBalance(b)}
       />
     )}
     </>
